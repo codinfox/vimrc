@@ -16,6 +16,7 @@ Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Raimondi/delimitMate'
+Plugin 'airblade/vim-gitgutter'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -51,6 +52,8 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1  
 let g:ycm_confirm_extra_conf = 0  
 
+"""""""""""vim-airline""""""""""""
+let g:airline_powerline_fonts = 1
 
 "-------------Essential NRT Style Compliance Settings-------------
  

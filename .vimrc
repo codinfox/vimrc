@@ -119,8 +119,16 @@ set laststatus=2 "make statusline displayed all the time
 
 nmap ,s :NERDTreeFind<CR>
 
-" auto reload the vimrc after changes
-augroup reload_vimrc " {
-  autocmd!
-  autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END " }
+" automatically reload vimrc when it's saved
+au BufWritePost .vimrc so ~/.vimrc
+
+" Reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
+" Easy split navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+

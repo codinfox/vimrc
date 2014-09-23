@@ -103,7 +103,9 @@ function! OpenOther()
 endfunction
 nmap ,o :call OpenOther()<CR>
 
+"---------------------------- End for NRT ---------------------------------
 
+"---------------------------- My Cool Stuff -------------------------------
 colorscheme molokai
 
 set t_Co=256
@@ -140,3 +142,5 @@ endfunction
 set guitablabel=%{GuiTabLabel()}
 set go+=e
 
+" Use system clipboard instead of vim buffer
+set clipboard+=unnamed

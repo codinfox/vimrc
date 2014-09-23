@@ -132,3 +132,11 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Customize GVIM tabname
+" Set tabname with let t:mytablabel="tabname"
+function! GuiTabLabel()
+  return exists('t:mytablabel') ? t:mytablabel : ''
+endfunction
+set guitablabel=%{GuiTabLabel()}
+set go+=e
+

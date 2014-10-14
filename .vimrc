@@ -15,7 +15,9 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'Raimondi/delimitMate'
+Plugin 'Lokaltog/vim-easymotion'
 Plugin 'airblade/vim-gitgutter'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -137,7 +139,7 @@ nnoremap <C-l> <C-w>l
 " Customize GVIM tabname
 " Set tabname with let t:mytablabel="tabname"
 function! GuiTabLabel()
-  return exists('t:mytablabel') ? t:mytablabel : ''
+  return exists('t:tabname') ? t:tabname : ''
 endfunction
 set guitablabel=%{GuiTabLabel()}
 set go+=e

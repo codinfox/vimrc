@@ -16,7 +16,8 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
+" Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-commentary'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'airblade/vim-gitgutter'
@@ -109,7 +110,14 @@ set autochdir
 "---------------------------- End for NRT ---------------------------------
 
 "---------------------------- My Cool Stuff -------------------------------
-colorscheme molokai
+if (has("gui_running"))
+  colorscheme molokai
+  set lines=35 columns=120
+  set guifont=Inconsolata\ for\ Powerline:h15
+else
+  " Same scheme with terminal
+  colorscheme smyck
+endif
 
 nmap <silent> <leader>d <Plug>DashSearch
 
@@ -147,3 +155,14 @@ set guitablabel=%{GuiTabLabel()}
 set go+=e
 
 syntax on
+
+" Automatic closing curly brace and putting cursor to the right place
+imap {<CR> {<CR>}<ESC>O
+
+" Commentary.vim tricks
+" Map <D-/> (Command-/) as comment toggle
+" Sadly this trick only works in MacVim, no CLI support
+imap <silent><D-/> <ESC>gcca
+nmap <silent><D-/> gcc
+vmap <silent><D-/> gc
+

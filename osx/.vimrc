@@ -9,23 +9,25 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'tomasr/molokai'
+Plugin 'w0ng/vim-hybrid'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'rizzatti/dash.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
-" Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-commentary'
+Plugin 'pangloss/vim-javascript'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
-Plugin 'parkr/vim-jekyll'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'junegunn/vim-easy-align'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'Taglist.vim'
+Plugin 'lervag/vimtex'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -54,32 +56,8 @@ let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
-set term=xterm-256color
 set termencoding=utf-8
 
-""""""""Instant Markdown""""""""
-let g:instant_markdown_slow = 1
-
-"""""""LaTeX-Suite""""""""""
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-
-"""""""""EasyAlign"""""""""""
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-"-------------Essential NRT Style Compliance Settings-------------
- 
 " Disable old-school vi compatability
 set nocompatible
 
@@ -99,8 +77,8 @@ set expandtab
 set smartindent
 
 " Make the maximum line length equal 120
-set lbr
-set textwidth=120 fo=cqt wm=0
+" set lbr
+" set textwidth=120 fo=cqt wm=0
 
 "-------------Other cool vim tricks-------------
 
@@ -113,28 +91,43 @@ set wildmode=list:longest
 " you can just type in the relative path from the file you're currently editing.
 set autochdir
 
-"---------------------------- End for NRT ---------------------------------
-
 "---------------------------- My Cool Stuff -------------------------------
 if (has("gui_running"))
-  colorscheme molokai
+  syntax enable
+  set background=dark
+  " colorscheme solarized
+  colorscheme hybrid
+  
+  " colorscheme molokai
   set lines=35 columns=120
   set guifont=Inconsolata\ for\ Powerline:h15
 else
   " Same scheme with terminal
   colorscheme smyck
+  set term=xterm-256color " for powerline
 endif
+
+" Remove scrollbar in GUI
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
 
 nmap <silent> <leader>d <Plug>DashSearch
 
-set t_Co=256
 set nu
+set cursorline
+set so=10 "Number of lines before bottom when scrolling vertically
+
+" Per Project vimrc
+set exrc
+set secure
 
 map <F2> :NERDTreeToggle<CR>
 
 set hls
-set autowrite
-set autowriteall
+" set autowrite
+" set autowriteall
 set laststatus=2 "make statusline displayed all the time
 
 nmap <silent> <leader>s :NERDTreeFind<CR>
@@ -172,3 +165,5 @@ imap <silent><D-/> <ESC>gcca
 nmap <silent><D-/> gcc
 vmap <silent><D-/> gc
 
+" Rebuild CTags
+nmap <silent><D-r> :!ctags -R .<CR>

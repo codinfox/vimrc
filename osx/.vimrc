@@ -9,8 +9,6 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'w0ng/vim-hybrid'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'rizzatti/dash.vim'
 Plugin 'Valloric/YouCompleteMe'
@@ -18,18 +16,23 @@ Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-commentary'
-Plugin 'pangloss/vim-javascript'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
+Plugin 'majutsushi/tagbar'
+" Colorscheme
+Plugin 'w0ng/vim-hybrid'
+Plugin 'altercation/vim-colors-solarized'
+" Syntax highlight scheme
+Plugin 'jez/vim-ispc'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'Taglist.vim'
-Plugin 'lervag/vimtex'
+Plugin 'pangloss/vim-javascript'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+" Allow plugins to control our indentation
 filetype plugin indent on    " required
 
 """"""""""syntastic""""""""""""  
@@ -39,9 +42,19 @@ let g:syntastic_cpp_remove_include_errors = 1
 let g:syntastic_cpp_check_header = 1  
 let g:syntastic_cpp_compiler = 'clang++'  
 let g:syntastic_cpp_config_file = '.syntastic_cpp_config'
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 "set error or warning signs  
-"let g:syntastic_error_symbol = 'x'  
-"let g:syntastic_warning_symbol = '!'  
+let g:syntastic_error_symbol = 'x'  
+let g:syntastic_warning_symbol = '!'  
 ""whether to show balloons  
 let g:syntastic_enable_balloons = 1  
   
@@ -58,11 +71,24 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 
-" Disable old-school vi compatability
-set nocompatible
+"--------------------------- Environment Setting ------------------------------
 
-" Allow plugins to control our indentation
-filetype plugin indent on
+syntax on
+
+set nu
+set cursorline
+set hls
+
+" Move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" Per Project vimrc
+set exrc
+set secure
+
+" Number of lines before bottom when scrolling vertically
+set so=10 
 
 " Set each auto-indent level to equal two spaces
 set shiftwidth=2
@@ -80,7 +106,8 @@ set smartindent
 " set lbr
 " set textwidth=120 fo=cqt wm=0
 
-"-------------Other cool vim tricks-------------
+" automatically reload vimrc when it's saved
+" au BufWritePost .vimrc so ~/.vimrc
 
 " Use a cool menu when autocompleting filenames, commands, etc...
 set wildmenu
@@ -91,6 +118,17 @@ set wildmode=list:longest
 " you can just type in the relative path from the file you're currently editing.
 set autochdir
 
+" Remove scrollbar in GUI
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+
+" set autowrite
+" set autowriteall
+
+" Make statusline displayed all the time (for powerline)
+set laststatus=2 
 "---------------------------- My Cool Stuff -------------------------------
 if (has("gui_running"))
   syntax enable
@@ -107,33 +145,17 @@ else
   set term=xterm-256color " for powerline
 endif
 
-" Remove scrollbar in GUI
-set guioptions-=r
-set guioptions-=R
-set guioptions-=l
-set guioptions-=L
+"--------------------------- Key Remapping ------------------------------
 
+" Open in Dash
 nmap <silent> <leader>d <Plug>DashSearch
 
-set nu
-set cursorline
-set so=10 "Number of lines before bottom when scrolling vertically
-
-" Per Project vimrc
-set exrc
-set secure
-
+" NERDTree
+nmap <silent> <leader>s :NERDTreeFind<CR>
 map <F2> :NERDTreeToggle<CR>
 
-set hls
-" set autowrite
-" set autowriteall
-set laststatus=2 "make statusline displayed all the time
-
-nmap <silent> <leader>s :NERDTreeFind<CR>
-
-" automatically reload vimrc when it's saved
-au BufWritePost .vimrc so ~/.vimrc
+" Tagbar
+nmap <F3> :TagbarToggle<CR>
 
 " Reselect visual block after indent/outdent
 vnoremap < <gv
@@ -144,16 +166,6 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
-" Customize GVIM tabname
-" Set tabname with let t:mytablabel="tabname"
-function! GuiTabLabel()
-  return exists('t:tabname') ? t:tabname : ''
-endfunction
-set guitablabel=%{GuiTabLabel()}
-set go+=e
-
-syntax on
 
 " Automatic closing curly brace and putting cursor to the right place
 imap {<CR> {<CR>}<ESC>O
@@ -166,4 +178,10 @@ nmap <silent><D-/> gcc
 vmap <silent><D-/> gc
 
 " Rebuild CTags
-nmap <silent><D-r> :!ctags -R .<CR>
+nmap <silent><D-t> :!ctags -R .<CR>
+
+" Run code
+autocmd FileType python nnoremap <buffer> <D-r> :exec '!python' shellescape(@%, 1)<cr>
+autocmd FileType c nnoremap <silent> <D-r> :!clear;gcc % -o % && ./%<CR>
+
+

@@ -1,3 +1,5 @@
+" Vundle Plugins {{{
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -23,6 +25,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'terryma/vim-multiple-cursors'
 " Colorscheme
 Plugin 'w0ng/vim-hybrid'
 Plugin 'altercation/vim-colors-solarized'
@@ -34,6 +37,9 @@ Plugin 'pangloss/vim-javascript'
 call vundle#end()            " required
 " Allow plugins to control our indentation
 filetype plugin indent on    " required
+
+
+" Plugins Setting {{{
 
 """"""""""syntastic""""""""""""  
 let g:syntastic_check_on_open = 1  
@@ -71,13 +77,27 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 
-"--------------------------- Environment Setting ------------------------------
+"""""""""CtrlP""""""""""
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+
+" }}}
+" }}}
+
+" Environment Setting {{{
 
 syntax on
 
 set nu
 set cursorline
+
+" Highlight search
 set hls
+
+" Incremental search (search as characters are entered)
+set incsearch
 
 " Move vertically by visual line
 nnoremap j gj
@@ -96,11 +116,28 @@ set shiftwidth=2
 " Let each tab equal two spaces
 set tabstop=2
 
+" This is the number of spaces that is inserted when you hit 
+" <TAB> and also the number of spaces that are removed when 
+" you backspace
+set softtabstop=2
+
 " Make sure vim turns all tabs into spaces
 set expandtab
 
 " Make vim indent our code properly
 set smartindent
+
+" Enable folding
+set foldenable
+
+" Fold based on syntax
+set foldmethod=syntax
+
+" Open most folds on start
+set foldlevelstart=10
+
+" Nested fold max
+set foldnestmax=10
 
 " Make the maximum line length equal 120
 " set lbr
@@ -127,6 +164,9 @@ set guioptions-=L
 " set autowrite
 " set autowriteall
 
+" Use modeline
+set modelines=1
+
 " Make statusline displayed all the time (for powerline)
 set laststatus=2 
 "---------------------------- My Cool Stuff -------------------------------
@@ -145,7 +185,9 @@ else
   set term=xterm-256color " for powerline
 endif
 
-"--------------------------- Key Remapping ------------------------------
+" }}}
+
+" Key Mapping {{{
 
 " Open in Dash
 nmap <silent> <leader>d <Plug>DashSearch
@@ -157,6 +199,9 @@ map <F2> :NERDTreeToggle<CR>
 " Tagbar
 nmap <F3> :TagbarToggle<CR>
 
+" Space open/closes folds
+nnoremap <space> za
+
 " Reselect visual block after indent/outdent
 vnoremap < <gv
 vnoremap > >gv
@@ -166,6 +211,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" highlight last inserted text
+nnoremap vv `[v`]
 
 " Automatic closing curly brace and putting cursor to the right place
 imap {<CR> {<CR>}<ESC>O
@@ -184,4 +232,6 @@ nmap <silent><D-t> :!ctags -R .<CR>
 autocmd FileType python nnoremap <buffer> <D-r> :exec '!python' shellescape(@%, 1)<cr>
 autocmd FileType c nnoremap <silent> <D-r> :!clear;gcc % -o % && ./%<CR>
 
+" }}}
 
+" vim:foldmethod=marker:foldlevel=0

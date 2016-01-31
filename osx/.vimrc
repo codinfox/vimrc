@@ -199,6 +199,10 @@ map <F2> :NERDTreeToggle<CR>
 " Tagbar
 nmap <F3> :TagbarToggle<CR>
 
+" fugitive
+nnoremap <C-g>s :Gstatus<CR>
+nnoremap <C-g>c :Gcommit<CR>
+
 " Space open/closes folds
 nnoremap <space> za
 

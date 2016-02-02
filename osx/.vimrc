@@ -169,6 +169,10 @@ set modelines=1
 
 " Make statusline displayed all the time (for powerline)
 set laststatus=2 
+
+" I can type :help on my own, thanks.
+noremap <F1> <Esc>
+
 "---------------------------- My Cool Stuff -------------------------------
 if (has("gui_running"))
   syntax enable

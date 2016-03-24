@@ -101,6 +101,15 @@ set hls incsearch
 nnoremap j gj
 nnoremap k gk
 
+" Delete comment character when joining commented lines
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j 
+endif
+
+if has('path_extra')
+  setglobal tags-=./tags tags-=./tags; tags^=./tags;
+endif
+
 " Per Project vimrc
 set exrc secure
 

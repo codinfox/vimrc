@@ -70,6 +70,11 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rking/ag.vim'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'mattn/emmet-vim'
+Plugin 'kshenoy/vim-signature'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/vimshell.vim'
+Plugin 'tpope/vim-surround'
 
 " Colorscheme
 Plugin 'w0ng/vim-hybrid'
@@ -144,7 +149,7 @@ set wildmenu wildmode=list:longest
 " Make vim automatically change directories to the directory of any file you open. 
 " This means that when you open a file, then want to open another using :tabe, :o, etc,
 " you can just type in the relative path from the file you're currently editing.
-set autochdir
+" set autochdir
 
 " Remove scrollbar in GUI
 set guioptions-=r
@@ -194,7 +199,7 @@ nnoremap <C-l> <C-w>l
 " nnoremap vv `[v`]
 
 " Automatic closing curly brace and putting cursor to the right place
-imap {<CR> {<CR>}<ESC>O
+inoremap {<CR> {<CR>}<ESC>O
 
 " Commentary.vim tricks
 " Map <D-/> (Command-/) as comment toggle
@@ -204,7 +209,7 @@ nmap <silent><D-/> gcc
 vmap <silent><D-/> gc
 
 " Rebuild CTags
-nmap <silent><D-t> :!ctags -R .<CR>
+nnoremap <silent><D-t> :!ctags -R .<CR>
 
 " Run code
 autocmd FileType python nnoremap <buffer> <D-r> :exec '!python' shellescape(@%, 1)<cr>

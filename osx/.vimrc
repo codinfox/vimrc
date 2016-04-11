@@ -64,6 +64,7 @@ Plugin 'tpope/vim-fugitive' "{{{
 nnoremap <C-g>s :Gstatus<CR>
 nnoremap <C-g>c :Gcommit<CR>
 "}}}
+" Plugin 'mhinz/vim-startify'
 Plugin 'tpope/vim-commentary'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Lokaltog/vim-easymotion'
@@ -156,6 +157,9 @@ set guioptions-=r
 set guioptions-=R
 set guioptions-=l
 set guioptions-=L
+
+" Remove GUI tab, use graphical instead
+set guioptions-=e
 
 " set autowrite
 " set autowriteall

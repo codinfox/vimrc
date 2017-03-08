@@ -13,6 +13,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-airline/vim-airline' "{{{
 Plugin 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
+let g:airline_theme='wombat'
 set encoding=utf-8
 set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
@@ -20,6 +21,8 @@ set termencoding=utf-8
 set term=xterm-256color
 "}}}
 Plugin 'scrooloose/syntastic' "{{{
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -49,9 +52,6 @@ let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 "}}}
-Plugin 'rizzatti/dash.vim' "{{{
-nmap <silent> <leader>d <Plug>DashSearch
-"}}}
 Plugin 'majutsushi/tagbar' "{{{
 nmap <F3> :TagbarToggle<CR>
 "}}}
@@ -77,13 +77,10 @@ Plugin 'kshenoy/vim-signature'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'tpope/vim-surround'
-Plugin 'heavenshell/vim-pydocstring' "{{{
-    let g:pydocstring_enable_mapping = 0
-"}}}
 
 " Colorscheme
 " Current colorscheme Tomorrow is not managed by Vundle
-" Plugin 'w0ng/vim-hybrid'
+Plugin 'w0ng/vim-hybrid'
 
 " Syntax highlight scheme
 Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -164,6 +161,11 @@ set guioptions-=L
 " Remove GUI tab, use graphical instead
 set guioptions-=e
 
+" Remove the GUI toolbar
+set guioptions-=T
+" Remove the GUI menu
+set guioptions-=m
+
 " set autowrite
 " set autowriteall
 
@@ -179,9 +181,9 @@ noremap <F1> <Esc>
 if (has("gui_running"))
   syntax enable
   set background=dark
-  colorscheme Tomorrow " hybrid
+  colorscheme  hybrid "Tomorrow
   set lines=35 columns=120
-  set guifont=Inconsolata\ for\ Powerline:h15
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 13
 else
   " Same scheme with terminal
   colorscheme smyck
@@ -205,9 +207,6 @@ nnoremap <C-l> <C-w>l
 " highlight last inserted text
 " nnoremap vv `[v`]
 
-" When there is only one matched tag, jump; otherwise, let me choose
-nnoremap <C-]> g<C-]>
-
 " Automatic closing curly brace and putting cursor to the right place
 inoremap {<CR> {<CR>}<ESC>O
 
@@ -217,5 +216,13 @@ nnoremap <silent><D-t> :!ctags -R .<CR>
 " Run code
 autocmd FileType python nnoremap <buffer> <D-r> :exec '!python' shellescape(@%, 1)<cr>
 autocmd FileType c nnoremap <silent> <D-r> :!clear;gcc % -o % && ./%<CR>
+
+" Change the color for tabline
+hi TabLine      guifg=#333 guibg=#222 gui=none ctermfg=254 ctermbg=238 cterm=none
+hi TabLineSel   guifg=#666 guibg=#222 gui=bold ctermfg=231 ctermbg=235 cterm=bold
+hi TabLineFill  guifg=#999 guibg=#222 gui=none ctermfg=254 ctermbg=238 cterm=none
+
+" When there is only one matched tag, jump; otherwise, let me choose
+nnoremap <C-]> g<C-]>
 
 " vim:foldmethod=marker:foldlevel=0

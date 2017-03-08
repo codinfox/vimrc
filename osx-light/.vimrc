@@ -77,6 +77,9 @@ Plugin 'kshenoy/vim-signature'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'tpope/vim-surround'
+Plugin 'heavenshell/vim-pydocstring' "{{{
+    let g:pydocstring_enable_mapping = 0
+"}}}
 
 " Colorscheme
 " Current colorscheme Tomorrow is not managed by Vundle
@@ -201,6 +204,9 @@ nnoremap <C-l> <C-w>l
 
 " highlight last inserted text
 " nnoremap vv `[v`]
+
+" When there is only one matched tag, jump; otherwise, let me choose
+nnoremap <C-]> g<C-]>
 
 " Automatic closing curly brace and putting cursor to the right place
 inoremap {<CR> {<CR>}<ESC>O

@@ -13,12 +13,13 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'vim-airline/vim-airline' "{{{
 Plugin 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
-let g:airline_theme='wombat'
+let g:airline_theme='bubblegum'
+let g:airline#extensions#tabline#enabled = 1
 set encoding=utf-8
 set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
-set term=xterm-256color
+"set term=xterm-256color
 "}}}
 Plugin 'scrooloose/syntastic' "{{{
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
@@ -77,10 +78,15 @@ Plugin 'kshenoy/vim-signature'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'tpope/vim-surround'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
+Plugin 'KabbAmine/zeavim.vim'
+" Plugin 'Yggdroot/indentLine'
 
 " Colorscheme
 " Current colorscheme Tomorrow is not managed by Vundle
 Plugin 'w0ng/vim-hybrid'
+Plugin 'jacoborus/tender.vim'
 
 " Syntax highlight scheme
 Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -121,13 +127,6 @@ set exrc secure
 
 " Number of lines before bottom when scrolling vertically
 set so=10
-
-" 1. Set each auto-indent level to equal two spaces
-" 2. Let each tab equal two spaces
-" 3. The number of spaces that is inserted when you hit <TAB> and
-"    also the number of spaces that are removed when you backspace
-" 4. Make sure vim turns all tabs into spaces
-set shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 
 " Make vim indent our code properly
 set smartindent
@@ -181,12 +180,12 @@ noremap <F1> <Esc>
 if (has("gui_running"))
   syntax enable
   set background=dark
-  colorscheme  hybrid "Tomorrow
+  colorscheme tender "hybrid, Tomorrow
   set lines=35 columns=120
   set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 13
 else
   " Same scheme with terminal
-  colorscheme smyck
+  colorscheme tender "smyck
 endif
 
 " Key Mapping"
@@ -217,12 +216,47 @@ nnoremap <silent><D-t> :!ctags -R .<CR>
 autocmd FileType python nnoremap <buffer> <D-r> :exec '!python' shellescape(@%, 1)<cr>
 autocmd FileType c nnoremap <silent> <D-r> :!clear;gcc % -o % && ./%<CR>
 
-" Change the color for tabline
-hi TabLine      guifg=#333 guibg=#222 gui=none ctermfg=254 ctermbg=238 cterm=none
-hi TabLineSel   guifg=#666 guibg=#222 gui=bold ctermfg=231 ctermbg=235 cterm=bold
-hi TabLineFill  guifg=#999 guibg=#222 gui=none ctermfg=254 ctermbg=238 cterm=none
-
 " When there is only one matched tag, jump; otherwise, let me choose
 nnoremap <C-]> g<C-]>
+
+" X to close tab
+nnoremap X :tabclose<CR>
+
+" Single stroke to navigate tabs
+nnoremap H gT
+nnoremap L gt
+
+" Highlight column 80 and area above 100
+highlight ColorColumn ctermbg=236 guibg=#2c2d27
+autocmd Filetype python let &colorcolumn="80"
+autocmd Filetype cpp let &colorcolumn="100"
+
+" 1. Set each auto-indent level to equal two spaces
+" 2. Let each tab equal two spaces
+" 3. The number of spaces that is inserted when you hit <TAB> and
+"    also the number of spaces that are removed when you backspace
+" 4. Make sure vim turns all tabs into spaces
+autocmd Filetype cpp set shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+autocmd Filetype python set shiftwidth=4 tabstop=4 softtabstop=4 expandtab
+
+" Customized Appearance {{{
+
+" Change the color for tabline
+" hi TabLine      guifg=#333 guibg=#222 gui=none ctermfg=254 ctermbg=238 cterm=none
+" hi TabLineSel   guifg=#666 guibg=#222 gui=bold ctermfg=231 ctermbg=235 cterm=bold
+" hi TabLineFill  guifg=#999 guibg=#222 gui=none ctermfg=254 ctermbg=238 cterm=none
+
+" Change the color for vertical split bar
+" hi VertSplit ctermfg=235 ctermbg=238
+hi VertSplit ctermfg=0
+
+" Change the search highlight
+hi Search guifg=#ffffff ctermfg=15 guibg=#008787 ctermbg=30 gui=bold cterm=bold
+
+" Change Supertab dropdown
+hi Pmenu ctermbg=238 ctermfg=255 guibg=#444444 guifg=#eeeeee
+hi PmenuSel ctermbg=214 ctermfg=232 guibg=#ffaf00 guifg=#eeeeee
+
+"}}}
 
 " vim:foldmethod=marker:foldlevel=0
